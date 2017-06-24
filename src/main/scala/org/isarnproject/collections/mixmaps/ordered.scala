@@ -177,6 +177,11 @@ trait OrderedLike[K, +IN <: INode[K], +M <: OrderedLike[K, IN, M]] extends Node[
 trait OrderedSetLike[K, IN <: INode[K], M <: OrderedSetLike[K, IN, M] with SortedSet[K]]
   extends OrderedLike[K, IN, M] with SetLike[K, M] with SortedSetLike[K, M] {
 
+  override def isEmpty = this match {
+    case _: LNode[_] => true
+    case _ => false
+  }
+
   def empty: M
 
   /** Obtain a new container with key removed */
@@ -226,6 +231,11 @@ trait OrderedSetLike[K, IN <: INode[K], M <: OrderedSetLike[K, IN, M] with Sorte
  */
 trait OrderedMapLike[K, +V, +IN <: INodeMap[K, V], +M <: OrderedMapLike[K, V, IN, M] with SortedMap[K, V]]
   extends NodeMap[K, V] with OrderedLike[K, IN, M] with SortedMapLike[K, V, M] {
+
+  override def isEmpty = this match {
+    case _: LNode[_] => true
+    case _ => false
+  }
 
   def empty: M
 
